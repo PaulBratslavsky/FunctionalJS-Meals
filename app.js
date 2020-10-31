@@ -49,9 +49,8 @@ const row = createRow(createNodeElement, 'tr', ['stripe-dark'], null, [
     createCell(createNodeElement, 'td', ['pa2', 'tr'], '600')
 ])
 const rows = createRowsFromData(MEALS)
-
-
 const tbody = createTableBody(createNodeElement, 'tbody', ['test'], null, rows)
+
 const node = document.getElementById('app')
 node.appendChild(tbody)
 
