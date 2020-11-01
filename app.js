@@ -12,9 +12,9 @@ function createNodeElement(tag, className, value, children) {
     className.forEach(item => data.classList.add(item))
 
     if (value) {
-        const dataValue = document.createTextNode(value);
-        data.appendChild(dataValue)
+        data.appendChild(document.createTextNode(value))
     }
+    
     if (children) {
         children.forEach(child => data.appendChild(child))
     }
@@ -30,7 +30,15 @@ function createRow(fn, tag, className, value, items) {
     return fn(tag, className, value, items)
 }
 
+function createTableHeader(fn, tag, className, value, items) {
+    return fn(tag, className, value, items)
+}
+
 function createTableBody(fn, tag, className, value, items) {
+    return fn(tag, className, value, items)
+}
+
+function createTable(fn, tag, className, value, items) {
     return fn(tag, className, value, items)
 }
 
@@ -48,10 +56,19 @@ const row = createRow(createNodeElement, 'tr', ['stripe-dark'], null, [
     createCell(createNodeElement, 'td', ['pa2', 'tl'], 'Breakfast'),
     createCell(createNodeElement, 'td', ['pa2', 'tr'], '600')
 ])
+
+const rowHead = createRow(createNodeElement, 'tr', [], null, [
+    createCell(createNodeElement, 'th', ['pa2', 'tl'], 'Meal'),
+    createCell(createNodeElement, 'th', ['pa2', 'tr'], 'Calories')
+])
+
 const rows = createRowsFromData(MEALS)
-const tbody = createTableBody(createNodeElement, 'tbody', ['test'], null, rows)
+const thead = createTableHeader(createNodeElement, 'thead', [], null, [rowHead])
+const tbody = createTableBody(createNodeElement, 'tbody', [], null, rows)
+const table = createTable(createNodeElement, 'table', ['mw5', 'center', 'w-100',  'collapse'], null, [thead, tbody])
+
 
 const node = document.getElementById('app')
-node.appendChild(tbody)
+node.appendChild(table)
 
 
