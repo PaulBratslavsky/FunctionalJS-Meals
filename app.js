@@ -52,6 +52,16 @@ function createRowsFromData(items) {
     })
 }
 
+function calculateTotalFromData(items) {
+
+    let total = items.reduce((acc, item) => acc + item.calories, 0)
+
+    return createRow(createNodeElement, 'tr', ['bt', 'b'], null, [
+        createCell(createNodeElement, 'td', ['pa2', 'tl'], 'Total'),
+        createCell(createNodeElement, 'td', ['pa2', 'tr'], total)
+    ])
+}
+
 const row = createRow(createNodeElement, 'tr', ['stripe-dark'], null, [
     createCell(createNodeElement, 'td', ['pa2', 'tl'], 'Breakfast'),
     createCell(createNodeElement, 'td', ['pa2', 'tr'], '600')
@@ -62,11 +72,13 @@ const rowHead = createRow(createNodeElement, 'tr', [], null, [
     createCell(createNodeElement, 'th', ['pa2', 'tr'], 'Calories')
 ])
 
-const rows = createRowsFromData(MEALS)
-const thead = createTableHeader(createNodeElement, 'thead', [], null, [rowHead])
-const tbody = createTableBody(createNodeElement, 'tbody', [], null, rows)
-const table = createTable(createNodeElement, 'table', ['mw5', 'center', 'w-100',  'collapse'], null, [thead, tbody])
 
+const rows = createRowsFromData(MEALS)
+const total = calculateTotalFromData(MEALS)
+
+const thead = createTableHeader(createNodeElement, 'thead', [], null, [rowHead])
+const tbody = createTableBody(createNodeElement, 'tbody', [], null, [...rows, total])
+const table = createTable(createNodeElement, 'table', ['mw5', 'center', 'w-100',  'collapse'], null, [thead, tbody])
 
 const node = document.getElementById('app')
 node.appendChild(table)
